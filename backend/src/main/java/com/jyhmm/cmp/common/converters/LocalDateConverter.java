@@ -1,4 +1,4 @@
-package com.jyhmm.cmp.converter;
+package com.jyhmm.cmp.common.converters;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;

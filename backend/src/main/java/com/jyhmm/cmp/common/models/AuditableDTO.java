@@ -1,23 +1,24 @@
-package com.jyhmm.cmp.common;
+package com.jyhmm.cmp.common.models;
 
+import com.jyhmm.cmp.common.utils.DateUtils;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serial;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @NoArgsConstructor
 public abstract class AuditableDTO extends BaseDTO {
+
     @Serial
     private static final long serialVersionUID = 4547565494397472386L;
 
     private String createdBy;
-    private LocalDateTime createdDate;
+    private String createdDate;
     private String updatedBy;
-    private LocalDateTime updatedDate;
+    private String updatedDate;
 
     public <Entity extends AuditableEntity> AuditableDTO(Entity entity) {
         super(entity);
@@ -26,8 +27,8 @@ public abstract class AuditableDTO extends BaseDTO {
 
     public <Entity extends AuditableEntity> void setAuditValuesFrom(Entity entity) {
         this.createdBy = entity.getCreatedBy();
-        this.createdDate = entity.getCreatedDate();
+        this.createdDate = DateUtils.formatDateTime(entity.getCreatedDate());
         this.updatedBy = entity.getUpdatedBy();
-        this.updatedDate = entity.getUpdatedDate();
+        this.updatedDate = DateUtils.formatDateTime(entity.getUpdatedDate());
     }
 }

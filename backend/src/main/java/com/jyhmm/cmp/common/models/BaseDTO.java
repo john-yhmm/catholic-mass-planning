@@ -1,4 +1,4 @@
-package com.jyhmm.cmp.common;
+package com.jyhmm.cmp.common.models;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

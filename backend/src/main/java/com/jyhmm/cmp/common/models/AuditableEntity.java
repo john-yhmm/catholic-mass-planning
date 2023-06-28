@@ -1,17 +1,15 @@
-package com.jyhmm.cmp.common;
+package com.jyhmm.cmp.common.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.time.LocalDateTime;
 
 @Getter
-@NoArgsConstructor
 @MappedSuperclass
 public abstract class AuditableEntity extends BaseEntity {
 
@@ -29,10 +27,6 @@ public abstract class AuditableEntity extends BaseEntity {
 
     @Column(name = "updated_date")
     private LocalDateTime updatedDate;
-
-    public <DTO extends AuditableDTO> AuditableEntity(DTO dto) {
-        super(dto);
-    }
 
     @PrePersist
     public void prePersist() {
