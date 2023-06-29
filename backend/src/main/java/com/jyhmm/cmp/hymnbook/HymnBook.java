@@ -1,13 +1,17 @@
 package com.jyhmm.cmp.hymnbook;
 
 import com.jyhmm.cmp.common.models.AuditableEntity;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serial;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -32,6 +36,9 @@ public class HymnBook extends AuditableEntity {
 
     @Column(name = "description")
     private String description;
+
+    @OneToMany(mappedBy = "hymnBook", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Category> categories = new ArrayList<>();
 
     public void setValuesFrom(HymnBookDTO dto) {
         this.title = dto.getTitle();
