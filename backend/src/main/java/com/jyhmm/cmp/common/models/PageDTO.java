@@ -26,10 +26,6 @@ public class PageDTO implements Serializable {
 
     public PageDTO(List<?> list, Page<?> page) {
         this.list = list;
-        setPageableValues(page);
-    }
-
-    public void setPageableValues(Page<?> page) {
         this.currentPage = page.getNumber();
         this.maxPageSize = page.getSize();
         this.numberOfElements = page.getNumberOfElements();

@@ -1,7 +1,7 @@
 package com.jyhmm.cmp.hymnbook;
 
 import com.jyhmm.cmp.common.constants.MsgConst;
-import com.jyhmm.cmp.common.exception.InvalidEntityException;
+import com.jyhmm.cmp.common.exception.InvalidDTOException;
 import com.jyhmm.cmp.common.models.AuditableDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,20 +20,20 @@ public class HymnBookDTO extends AuditableDTO {
     @Serial
     private static final long serialVersionUID = -3110490187237013705L;
 
+    private Long id;
     private String title;
     private String author;
     private String edition;
     private String publishYear;
     private String description;
+
     private List<CategoryDTO> categoryDTOList = new ArrayList<>();
     private Long[] deleteCategoryIds;
 
     public HymnBookDTO(HymnBook entity) {
         super(entity);
-        setValuesFrom(entity);
-    }
 
-    public void setValuesFrom(HymnBook entity) {
+        this.id = entity.getId();
         this.title = entity.getTitle();
         this.author = entity.getAuthor();
         this.edition = entity.getEdition();
@@ -42,6 +42,6 @@ public class HymnBookDTO extends AuditableDTO {
     }
 
     public void validate() {
-        if (!StringUtils.hasText(this.title)) throw new InvalidEntityException("Title" + MsgConst.NOT_EMPTY);
+        if (!StringUtils.hasText(this.title)) throw new InvalidDTOException("Title" + MsgConst.NOT_EMPTY);
     }
 }

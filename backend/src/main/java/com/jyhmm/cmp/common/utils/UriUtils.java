@@ -6,7 +6,7 @@ import java.net.URI;
 
 public class UriUtils {
 
-    public static URI getUriWithId(Long id) {
+    public static URI buildWithId(Long id) {
         return ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(id).toUri();
     }
 }

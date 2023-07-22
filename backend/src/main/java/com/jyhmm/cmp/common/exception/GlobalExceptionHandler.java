@@ -11,19 +11,19 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<Object> exceptionHandler(Exception e) {
+    public ResponseEntity<Object> globalExceptionHandler(Exception e) {
         log.debug(e.getCause().toString());
         return ResponseEntity.internalServerError().body(e.getLocalizedMessage());
     }
 
-    @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<Object> notFoundHandler(NotFoundException e) {
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<Object> entityNotFoundExceptionHandler(EntityNotFoundException e) {
         log.debug(e.getCause().toString());
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.badRequest().body(e.getLocalizedMessage());
     }
 
-    @ExceptionHandler(InvalidEntityException.class)
-    public ResponseEntity<Object> invalidEntityHandler(InvalidEntityException e) {
+    @ExceptionHandler(InvalidDTOException.class)
+    public ResponseEntity<Object> invalidDTOExceptionHandler(InvalidDTOException e) {
         log.debug(e.getCause().toString());
         return ResponseEntity.unprocessableEntity().body(e.getLocalizedMessage());
     }

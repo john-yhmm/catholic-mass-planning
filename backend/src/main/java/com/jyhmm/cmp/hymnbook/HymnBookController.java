@@ -1,13 +1,13 @@
 package com.jyhmm.cmp.hymnbook;
 
 import com.jyhmm.cmp.common.constants.MsgConst;
+import com.jyhmm.cmp.common.models.PageDTO;
 import com.jyhmm.cmp.common.utils.UriUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -24,20 +24,22 @@ public class HymnBookController {
     private final HymnBookService hymnBookService;
 
     @GetMapping("/hymn-books")
-    public ResponseEntity<?> getHymnBooks(@ModelAttribute HymnBookDTO params, @PageableDefault Pageable pageable) {
-        return ResponseEntity.ok(hymnBookService.getAllByFilter(params, pageable));
+    public ResponseEntity<?> getAll(@PageableDefault Pageable pageable) {
+        PageDTO pageDTO = hymnBookService.getAll(pageable);
+        return ResponseEntity.ok(pageDTO);
     }
 
     @GetMapping("/hymn-book/{id}")
     public ResponseEntity<?> getById(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(hymnBookService.getById(id));
+        HymnBookDTO hymnBook = hymnBookService.getById(id);
+        return ResponseEntity.ok(hymnBook);
     }
 
     @PostMapping("/hymn-book")
     public ResponseEntity<?> register(@RequestBody HymnBookDTO hymnBookDTO) {
         hymnBookDTO.validate();
         HymnBook hymnBook = hymnBookService.register(hymnBookDTO);
-        URI location = UriUtils.getUriWithId(hymnBook.getId());
+        URI location = UriUtils.buildWithId(hymnBook.getId());
         return ResponseEntity.created(location).body(MsgConst.REGISTERED);
     }
 
