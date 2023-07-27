@@ -15,7 +15,7 @@ import java.util.List;
 public class PageDTO implements Serializable {
 
     @Serial
-    private static final long serialVersionUID = -2773519546319835974L;
+    private static final long serialVersionUID = -8964406886091253238L;
 
     List<?> list;
     int currentPage;

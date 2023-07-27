@@ -23,7 +23,7 @@ import java.util.List;
 public class HymnBook extends AuditableEntity {
 
     @Serial
-    private static final long serialVersionUID = -8466728236079536136L;
+    private static final long serialVersionUID = -3004529395195961569L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

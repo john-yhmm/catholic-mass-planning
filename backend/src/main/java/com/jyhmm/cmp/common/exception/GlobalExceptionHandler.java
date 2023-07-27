@@ -13,18 +13,16 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> globalExceptionHandler(Exception e) {
         log.debug(e.getCause().toString());
-        return ResponseEntity.internalServerError().body(e.getLocalizedMessage());
+        return ResponseEntity.internalServerError().body(e.getMessage());
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<Object> entityNotFoundExceptionHandler(EntityNotFoundException e) {
-        log.debug(e.getCause().toString());
-        return ResponseEntity.badRequest().body(e.getLocalizedMessage());
+    public ResponseEntity<Object> handleEntityNotFoundException(EntityNotFoundException e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
     }
 
-    @ExceptionHandler(InvalidDTOException.class)
-    public ResponseEntity<Object> invalidDTOExceptionHandler(InvalidDTOException e) {
-        log.debug(e.getCause().toString());
-        return ResponseEntity.unprocessableEntity().body(e.getLocalizedMessage());
+    @ExceptionHandler(ObjectInvalidException.class)
+    public ResponseEntity<Object> handleObjectInvalidException(ObjectInvalidException e) {
+        return ResponseEntity.unprocessableEntity().body(e.getErrorMessages());
     }
 }

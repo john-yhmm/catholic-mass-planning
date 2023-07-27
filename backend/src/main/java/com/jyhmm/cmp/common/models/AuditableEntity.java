@@ -7,14 +7,15 @@ import jakarta.persistence.PreUpdate;
 import lombok.Getter;
 
 import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Getter
 @MappedSuperclass
-public abstract class AuditableEntity extends BaseEntity {
+public abstract class AuditableEntity implements Serializable {
 
     @Serial
-    private static final long serialVersionUID = 8184096293775242201L;
+    private static final long serialVersionUID = -441388499895472247L;
 
     @Column(name = "created_by")
     private String createdBy;

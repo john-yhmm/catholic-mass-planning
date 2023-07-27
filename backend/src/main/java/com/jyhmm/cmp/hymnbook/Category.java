@@ -21,7 +21,7 @@ import java.io.Serializable;
 public class Category implements Serializable {
 
     @Serial
-    private static final long serialVersionUID = 115468282187437277L;
+    private static final long serialVersionUID = -4482338004923430505L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

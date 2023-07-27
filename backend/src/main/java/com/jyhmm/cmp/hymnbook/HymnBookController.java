@@ -2,7 +2,7 @@ package com.jyhmm.cmp.hymnbook;
 
 import com.jyhmm.cmp.common.constants.MsgConst;
 import com.jyhmm.cmp.common.models.PageDTO;
-import com.jyhmm.cmp.common.utils.UriUtils;
+import com.jyhmm.cmp.common.utils.Utils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -37,15 +37,13 @@ public class HymnBookController {
 
     @PostMapping("/hymn-book")
     public ResponseEntity<?> register(@RequestBody HymnBookDTO hymnBookDTO) {
-        hymnBookDTO.validate();
         HymnBook hymnBook = hymnBookService.register(hymnBookDTO);
-        URI location = UriUtils.buildWithId(hymnBook.getId());
+        URI location = Utils.buildUriWithId(hymnBook.getId());
         return ResponseEntity.created(location).body(MsgConst.REGISTERED);
     }
 
     @PutMapping("/hymn-book")
     public ResponseEntity<?> update(@RequestBody HymnBookDTO hymnBookDTO) {
-        hymnBookDTO.validate();
         hymnBookService.update(hymnBookDTO);
         return ResponseEntity.ok(MsgConst.UPDATED);
     }

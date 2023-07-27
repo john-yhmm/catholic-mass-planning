@@ -4,9 +4,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 
-public class UriUtils {
+public class Utils {
 
-    public static URI buildWithId(Long id) {
+    public static URI buildUriWithId(Long id) {
         return ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(id).toUri();
     }
 }
