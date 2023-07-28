@@ -1,4 +1,4 @@
-package com.jyhmm.cmp.hymnbook;
+package com.jyhmm.cmp.hymn;
 
 import com.jyhmm.cmp.common.constants.MsgConst;
 import com.jyhmm.cmp.common.models.PageDTO;
@@ -20,32 +20,32 @@ import java.net.URI;
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
-public class HymnBookController {
+public class HymnController {
 
-    private final HymnBookService hymnBookService;
+    private final HymnService hymnService;
 
-    @GetMapping("/hymn-books")
+    @GetMapping("/hymns")
     public ResponseEntity<?> getAll(@PageableDefault Pageable pageable) {
-        PageDTO pageDTO = hymnBookService.getAll(pageable);
+        PageDTO pageDTO = hymnService.getAll(pageable);
         return ResponseEntity.ok(pageDTO);
     }
 
-    @GetMapping("/hymn-book/{id}")
+    @GetMapping("/hymn/{id}")
     public ResponseEntity<?> getById(@PathVariable("id") Long id) {
-        HymnBookDTO hymnBookDTO = hymnBookService.getById(id);
-        return ResponseEntity.ok(hymnBookDTO);
+        HymnDTO hymnDTO = hymnService.getById(id);
+        return ResponseEntity.ok(hymnDTO);
     }
 
-    @PostMapping("/hymn-book")
-    public ResponseEntity<?> register(@RequestBody HymnBookDTO hymnBookDTO) {
-        HymnBook hymnBook = hymnBookService.register(hymnBookDTO);
-        URI location = Utils.buildUriWithId(hymnBook.getId());
+    @PostMapping("/hymn")
+    public ResponseEntity<?> register(@RequestBody HymnDTO hymnDTO) {
+        Hymn hymn = hymnService.register(hymnDTO);
+        URI location = Utils.buildUriWithId(hymn.getId());
         return ResponseEntity.created(location).body(MsgConst.REGISTERED);
     }
 
-    @PutMapping("/hymn-book")
-    public ResponseEntity<?> update(@RequestBody HymnBookDTO hymnBookDTO) {
-        hymnBookService.update(hymnBookDTO);
+    @PutMapping("/hymn")
+    public ResponseEntity<?> update(@RequestBody HymnDTO hymnDTO) {
+        hymnService.update(hymnDTO);
         return ResponseEntity.ok(MsgConst.UPDATED);
     }
 }

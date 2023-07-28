@@ -70,9 +70,10 @@ public class HymnBookService {
         }
         hymnBookRepository.save(hymnBook);
 
-        if (hymnBookDTO.getDeleteCategoryIds() != null)
+        if (hymnBookDTO.getDeleteCategoryIds() != null) {
             categoryRepository.findByIdIn(hymnBookDTO.getDeleteCategoryIds())
                     .ifPresent(categoryRepository::deleteAllInBatch);
+        }
     }
 
     private Category createNewCategory(HymnBook hymnBook, CategoryDTO categoryDTO) {
