@@ -3,6 +3,9 @@ package com.jyhmm.cmp.hymn;
 import com.jyhmm.cmp.common.exception.EntityNotFoundException;
 import com.jyhmm.cmp.common.models.PageDTO;
 import com.jyhmm.cmp.common.utils.ObjectValidator;
+import com.jyhmm.cmp.hymnbook.Category;
+import com.jyhmm.cmp.hymnbook.HymnBook;
+import com.jyhmm.cmp.hymnbook.HymnBookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +22,7 @@ public class HymnService {
     private final ObjectValidator objectValidator;
     private final HymnRepository hymnRepository;
     private final HymnDetailRepository hymnDetailRepository;
+    private final HymnBookService hymnBookService;
 
     public PageDTO getAll(Pageable pageable) {
         Page<Hymn> page = hymnRepository.findAll(pageable);
@@ -40,8 +44,13 @@ public class HymnService {
     @Transactional(rollbackFor = Exception.class)
     public Hymn register(HymnDTO hymnDTO) {
         objectValidator.validate(hymnDTO);
+        HymnBook hymnBook = hymnBookService.findHymnBookById(hymnDTO.getHymnBookId());
+        Category category = hymnBookService.findCategoryById(hymnDTO.getCategoryId());
+
         Hymn hymn = new Hymn();
         hymn.setValuesFrom(hymnDTO);
+        hymn.setHymnBook(hymnBook);
+        hymn.setCategory(category);
 
         for (HymnDetailDTO hymnDetailDTO : hymnDTO.getHymnDetailList()) {
             HymnDetail hymnDetail = createNewHymnDetail(hymn, hymnDetailDTO);
@@ -53,8 +62,13 @@ public class HymnService {
     @Transactional(rollbackFor = Exception.class)
     public void update(HymnDTO hymnDTO) {
         objectValidator.validate(hymnDTO);
+        HymnBook hymnBook = hymnBookService.findHymnBookById(hymnDTO.getHymnBookId());
+        Category category = hymnBookService.findCategoryById(hymnDTO.getCategoryId());
+
         Hymn hymn = findHymnById(hymnDTO.getId());
         hymn.setValuesFrom(hymnDTO);
+        hymn.setHymnBook(hymnBook);
+        hymn.setCategory(category);
 
         for (HymnDetailDTO hymnDetailDTO : hymnDTO.getHymnDetailList()) {
             if (hymnDetailDTO.getId() == null) {
@@ -81,12 +95,12 @@ public class HymnService {
         return hymnDetail;
     }
 
-    private Hymn findHymnById(Long id) {
+    public Hymn findHymnById(Long id) {
         return hymnRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Hymn with id (" + id + ") not found."));
     }
 
-    private HymnDetail findHymnDetailById(Long id) {
+    public HymnDetail findHymnDetailById(Long id) {
         return hymnDetailRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Hymn Detail with id (" + id + ") not found."));
     }

@@ -1,5 +1,6 @@
 package com.jyhmm.cmp.kyriale;
 
+@SuppressWarnings("unused")
 public enum KyrialeType {
     KYRIE,
     GLORIA,
