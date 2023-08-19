@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PostLoad;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import lombok.Getter;
@@ -69,10 +70,9 @@ public class SlideSetting extends AuditableEntity {
     @Transient
     private Rectangle offsetAndSize;
 
-    public Rectangle getOffsetAndSize() {
-        if (offsetAndSize == null || offsetAndSize.isEmpty())
-            offsetAndSize = new Rectangle(x, y, width, height);
-        return offsetAndSize;
+    @PostLoad
+    public void postLoad() {
+        offsetAndSize = new Rectangle(x, y, width, height);
     }
 
     public void setValuesFrom(SlideSettingDTO dto) {

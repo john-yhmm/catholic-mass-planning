@@ -2,6 +2,7 @@ package com.jyhmm.cmp.slidesetting;
 
 import com.jyhmm.cmp.common.models.AuditableDTO;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,6 +25,7 @@ public class SlideSettingDTO extends AuditableDTO {
     private int width;
     private int height;
 
+    @NotNull(message = "Please select Vertical Alignment")
     private VerticalAlignment verticalAlignment = VerticalAlignment.MIDDLE;
     private double spaceBefore;
     private double spaceAfter;
@@ -31,6 +33,8 @@ public class SlideSettingDTO extends AuditableDTO {
     @NotBlank(message = "Please provide Font Name")
     private String fontName;
     private double fontSize;
+
+    @NotNull(message = "Please select Text Color")
     private Color textColor = Color.BLACK;
     private boolean isBold;
     private boolean isItalic;
